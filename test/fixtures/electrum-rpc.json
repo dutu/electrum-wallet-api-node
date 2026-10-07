@@ -1,0 +1,2483 @@
+{
+  "revision": "810d934285fea0310dda47a235a8848c1a6c08e2",
+  "version": "4.8.2",
+  "retrieved": "2026-10-08",
+  "commands": [
+    {
+      "rpc": "getinfo",
+      "js": "getInfo",
+      "flags": "n",
+      "parameters": [],
+      "source": "commands.py",
+      "line": 253
+    },
+    {
+      "rpc": "stop",
+      "js": "stop",
+      "flags": "n",
+      "parameters": [],
+      "source": "commands.py",
+      "line": 271
+    },
+    {
+      "rpc": "list_wallets",
+      "js": "listWallets",
+      "flags": "n",
+      "parameters": [],
+      "source": "commands.py",
+      "line": 277
+    },
+    {
+      "rpc": "load_wallet",
+      "js": "loadWallet",
+      "flags": "n",
+      "parameters": [
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 289
+    },
+    {
+      "rpc": "close_wallet",
+      "js": "closeWallet",
+      "flags": "n",
+      "parameters": [
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 300
+    },
+    {
+      "rpc": "create",
+      "js": "create",
+      "flags": "",
+      "parameters": [
+        {
+          "name": "passphrase",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "encrypt_file",
+          "required": false,
+          "default": "True"
+        },
+        {
+          "name": "seed_type",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 305
+    },
+    {
+      "rpc": "restore",
+      "js": "restore",
+      "flags": "",
+      "parameters": [
+        {
+          "name": "text",
+          "required": true
+        },
+        {
+          "name": "passphrase",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "encrypt_file",
+          "required": false,
+          "default": "True"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 327
+    },
+    {
+      "rpc": "password",
+      "js": "password",
+      "flags": "wp",
+      "parameters": [
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "new_password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "encrypt_file",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 351
+    },
+    {
+      "rpc": "get",
+      "js": "get",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "key",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 371
+    },
+    {
+      "rpc": "getconfig",
+      "js": "getConfig",
+      "flags": "",
+      "parameters": [
+        {
+          "name": "key",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 380
+    },
+    {
+      "rpc": "setconfig",
+      "js": "setConfig",
+      "flags": "",
+      "parameters": [
+        {
+          "name": "key",
+          "required": true
+        },
+        {
+          "name": "value",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 424
+    },
+    {
+      "rpc": "unsetconfig",
+      "js": "unsetConfig",
+      "flags": "",
+      "parameters": [
+        {
+          "name": "key",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 434
+    },
+    {
+      "rpc": "listconfig",
+      "js": "listConfig",
+      "flags": "",
+      "parameters": [],
+      "source": "commands.py",
+      "line": 444
+    },
+    {
+      "rpc": "helpconfig",
+      "js": "helpConfig",
+      "flags": "",
+      "parameters": [
+        {
+          "name": "key",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 449
+    },
+    {
+      "rpc": "make_seed",
+      "js": "makeSeed",
+      "flags": "",
+      "parameters": [
+        {
+          "name": "nbits",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "language",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "seed_type",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 465
+    },
+    {
+      "rpc": "getaddresshistory",
+      "js": "getAddressHistory",
+      "flags": "n",
+      "parameters": [
+        {
+          "name": "address",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 477
+    },
+    {
+      "rpc": "unlock",
+      "js": "unlock",
+      "flags": "wp",
+      "parameters": [
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 488
+    },
+    {
+      "rpc": "listunspent",
+      "js": "listUnspent",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 493
+    },
+    {
+      "rpc": "getaddressunspent",
+      "js": "getAddressUnspent",
+      "flags": "n",
+      "parameters": [
+        {
+          "name": "address",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 505
+    },
+    {
+      "rpc": "serialize",
+      "js": "serialize",
+      "flags": "",
+      "parameters": [
+        {
+          "name": "jsontx",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 516
+    },
+    {
+      "rpc": "signtransaction_with_privkey",
+      "js": "signTransactionWithPrivkey",
+      "flags": "",
+      "parameters": [
+        {
+          "name": "tx",
+          "required": true
+        },
+        {
+          "name": "privkey",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 575
+    },
+    {
+      "rpc": "signtransaction",
+      "js": "signTransaction",
+      "flags": "wp",
+      "parameters": [
+        {
+          "name": "tx",
+          "required": true
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "ignore_warnings",
+          "required": false,
+          "default": "False"
+        }
+      ],
+      "source": "commands.py",
+      "line": 603
+    },
+    {
+      "rpc": "deserialize",
+      "js": "deserialize",
+      "flags": "",
+      "parameters": [
+        {
+          "name": "tx",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 615
+    },
+    {
+      "rpc": "broadcast",
+      "js": "broadcast",
+      "flags": "n",
+      "parameters": [
+        {
+          "name": "tx",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 625
+    },
+    {
+      "rpc": "createmultisig",
+      "js": "createMultisig",
+      "flags": "",
+      "parameters": [
+        {
+          "name": "num",
+          "required": true
+        },
+        {
+          "name": "pubkeys",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 636
+    },
+    {
+      "rpc": "freeze",
+      "js": "freeze",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "address",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 649
+    },
+    {
+      "rpc": "unfreeze",
+      "js": "unfreeze",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "address",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 658
+    },
+    {
+      "rpc": "freeze_utxo",
+      "js": "freezeUtxo",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "coin",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 667
+    },
+    {
+      "rpc": "unfreeze_utxo",
+      "js": "unfreezeUtxo",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "coin",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 677
+    },
+    {
+      "rpc": "getprivatekeys",
+      "js": "getPrivateKeys",
+      "flags": "wp",
+      "parameters": [
+        {
+          "name": "address",
+          "required": true
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 686
+    },
+    {
+      "rpc": "getprivatekeyforpath",
+      "js": "getPrivateKeyForPath",
+      "flags": "wp",
+      "parameters": [
+        {
+          "name": "path",
+          "required": true
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 699
+    },
+    {
+      "rpc": "ismine",
+      "js": "isMine",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "address",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 707
+    },
+    {
+      "rpc": "dumpprivkeys",
+      "js": "dumpPrivKeys",
+      "flags": "",
+      "parameters": [],
+      "source": "commands.py",
+      "line": 716
+    },
+    {
+      "rpc": "validateaddress",
+      "js": "validateAddress",
+      "flags": "",
+      "parameters": [
+        {
+          "name": "address",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 721
+    },
+    {
+      "rpc": "getpubkeys",
+      "js": "getPubKeys",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "address",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 729
+    },
+    {
+      "rpc": "getbalance",
+      "js": "getBalance",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 738
+    },
+    {
+      "rpc": "getaddressbalance",
+      "js": "getAddressBalance",
+      "flags": "n",
+      "parameters": [
+        {
+          "name": "address",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 752
+    },
+    {
+      "rpc": "getmerkle",
+      "js": "getMerkle",
+      "flags": "n",
+      "parameters": [
+        {
+          "name": "txid",
+          "required": true
+        },
+        {
+          "name": "height",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 766
+    },
+    {
+      "rpc": "getservers",
+      "js": "getServers",
+      "flags": "n",
+      "parameters": [],
+      "source": "commands.py",
+      "line": 776
+    },
+    {
+      "rpc": "version",
+      "js": "version",
+      "flags": "",
+      "parameters": [],
+      "source": "commands.py",
+      "line": 781
+    },
+    {
+      "rpc": "version_info",
+      "js": "versionInfo",
+      "flags": "",
+      "parameters": [],
+      "source": "commands.py",
+      "line": 786
+    },
+    {
+      "rpc": "getmpk",
+      "js": "getMpk",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 827
+    },
+    {
+      "rpc": "getmasterprivate",
+      "js": "getMasterPrivate",
+      "flags": "wp",
+      "parameters": [
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 832
+    },
+    {
+      "rpc": "convert_xkey",
+      "js": "convertXkey",
+      "flags": "",
+      "parameters": [
+        {
+          "name": "xkey",
+          "required": true
+        },
+        {
+          "name": "xtype",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 837
+    },
+    {
+      "rpc": "getseed",
+      "js": "getSeed",
+      "flags": "wp",
+      "parameters": [
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 850
+    },
+    {
+      "rpc": "importprivkey",
+      "js": "importPrivkey",
+      "flags": "wp",
+      "parameters": [
+        {
+          "name": "privkey",
+          "required": true
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 856
+    },
+    {
+      "rpc": "sweep",
+      "js": "sweep",
+      "flags": "n",
+      "parameters": [
+        {
+          "name": "privkey",
+          "required": true
+        },
+        {
+          "name": "destination",
+          "required": true
+        },
+        {
+          "name": "fee",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "feerate",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "imax",
+          "required": false,
+          "default": "100"
+        }
+      ],
+      "source": "commands.py",
+      "line": 888
+    },
+    {
+      "rpc": "signmessage",
+      "js": "signMessage",
+      "flags": "wp",
+      "parameters": [
+        {
+          "name": "address",
+          "required": true
+        },
+        {
+          "name": "message",
+          "required": true
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 913
+    },
+    {
+      "rpc": "verifymessage",
+      "js": "verifyMessage",
+      "flags": "",
+      "parameters": [
+        {
+          "name": "address",
+          "required": true
+        },
+        {
+          "name": "signature",
+          "required": true
+        },
+        {
+          "name": "message",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 933
+    },
+    {
+      "rpc": "payto",
+      "js": "payTo",
+      "flags": "wp",
+      "parameters": [
+        {
+          "name": "destination",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "required": true
+        },
+        {
+          "name": "fee",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "feerate",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "from_addr",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "from_coins",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "change_addr",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "unsigned",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "rbf",
+          "required": false,
+          "default": "True"
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "locktime",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "addtransaction",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 967
+    },
+    {
+      "rpc": "paytomany",
+      "js": "payToMany",
+      "flags": "wp",
+      "parameters": [
+        {
+          "name": "outputs",
+          "required": true
+        },
+        {
+          "name": "fee",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "feerate",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "from_addr",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "from_coins",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "change_addr",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "unsigned",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "rbf",
+          "required": false,
+          "default": "True"
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "locktime",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "addtransaction",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 999
+    },
+    {
+      "rpc": "onchain_capital_gains",
+      "js": "onchainCapitalGains",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "year",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1054
+    },
+    {
+      "rpc": "bumpfee",
+      "js": "bumpFee",
+      "flags": "wp",
+      "parameters": [
+        {
+          "name": "tx",
+          "required": true
+        },
+        {
+          "name": "new_fee_rate",
+          "required": true
+        },
+        {
+          "name": "from_coins",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "decrease_payment",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "unsigned",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1084
+    },
+    {
+      "rpc": "dscancel",
+      "js": "dsCancel",
+      "flags": "wp",
+      "parameters": [
+        {
+          "name": "tx",
+          "required": true
+        },
+        {
+          "name": "new_fee_rate",
+          "required": true
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "unsigned",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1110
+    },
+    {
+      "rpc": "onchain_history",
+      "js": "onchainHistory",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "show_fiat",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "year",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "show_addresses",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "from_height",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "to_height",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1130
+    },
+    {
+      "rpc": "lightning_history",
+      "js": "lightningHistory",
+      "flags": "wl",
+      "parameters": [
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1169
+    },
+    {
+      "rpc": "setlabel",
+      "js": "setLabel",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "key",
+          "required": true
+        },
+        {
+          "name": "label",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1176
+    },
+    {
+      "rpc": "listcontacts",
+      "js": "listContacts",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1187
+    },
+    {
+      "rpc": "getopenalias",
+      "js": "getOpenAlias",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "key",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1192
+    },
+    {
+      "rpc": "searchcontacts",
+      "js": "searchContacts",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "query",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1205
+    },
+    {
+      "rpc": "listaddresses",
+      "js": "listAddresses",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "receiving",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "change",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "labels",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "frozen",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "unused",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "funded",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "balance",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1218
+    },
+    {
+      "rpc": "gettransaction",
+      "js": "getTransaction",
+      "flags": "n",
+      "parameters": [
+        {
+          "name": "txid",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1252
+    },
+    {
+      "rpc": "encrypt",
+      "js": "encrypt",
+      "flags": "",
+      "parameters": [
+        {
+          "name": "pubkey",
+          "required": true
+        },
+        {
+          "name": "message",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 1271
+    },
+    {
+      "rpc": "decrypt",
+      "js": "decrypt",
+      "flags": "wp",
+      "parameters": [
+        {
+          "name": "pubkey",
+          "required": true
+        },
+        {
+          "name": "encrypted",
+          "required": true
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1285
+    },
+    {
+      "rpc": "get_request",
+      "js": "getRequest",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "request_id",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1299
+    },
+    {
+      "rpc": "get_invoice",
+      "js": "getInvoice",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "invoice_id",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1310
+    },
+    {
+      "rpc": "list_requests",
+      "js": "listRequests",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "pending",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "expired",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "paid",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1335
+    },
+    {
+      "rpc": "list_invoices",
+      "js": "listInvoices",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "pending",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "expired",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "paid",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1347
+    },
+    {
+      "rpc": "createnewaddress",
+      "js": "createNewAddress",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1359
+    },
+    {
+      "rpc": "changegaplimit",
+      "js": "changeGapLimit",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "new_limit",
+          "required": true
+        },
+        {
+          "name": "iknowwhatimdoing",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1364
+    },
+    {
+      "rpc": "getminacceptablegap",
+      "js": "getMinAcceptableGap",
+      "flags": "wn",
+      "parameters": [
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1383
+    },
+    {
+      "rpc": "getunusedaddress",
+      "js": "getUnusedAddress",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1394
+    },
+    {
+      "rpc": "add_request",
+      "js": "addRequest",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "amount",
+          "required": true
+        },
+        {
+          "name": "memo",
+          "required": false,
+          "default": "''"
+        },
+        {
+          "name": "expiry",
+          "required": false,
+          "default": "3600"
+        },
+        {
+          "name": "lightning",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "force",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1400
+    },
+    {
+      "rpc": "add_hold_invoice",
+      "js": "addHoldInvoice",
+      "flags": "wnl",
+      "parameters": [
+        {
+          "name": "payment_hash",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "memo",
+          "required": false,
+          "default": "''"
+        },
+        {
+          "name": "expiry",
+          "required": false,
+          "default": "3600"
+        },
+        {
+          "name": "min_final_cltv_expiry_delta",
+          "required": false,
+          "default": "MIN_FINAL_CLTV_DELTA_ACCEPTED * 2"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1428
+    },
+    {
+      "rpc": "settle_hold_invoice",
+      "js": "settleHoldInvoice",
+      "flags": "wnl",
+      "parameters": [
+        {
+          "name": "preimage",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1481
+    },
+    {
+      "rpc": "cancel_hold_invoice",
+      "js": "cancelHoldInvoice",
+      "flags": "wnl",
+      "parameters": [
+        {
+          "name": "payment_hash",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1505
+    },
+    {
+      "rpc": "check_hold_invoice",
+      "js": "checkHoldInvoice",
+      "flags": "wnl",
+      "parameters": [
+        {
+          "name": "payment_hash",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1529
+    },
+    {
+      "rpc": "export_lightning_preimage",
+      "js": "exportLightningPreimage",
+      "flags": "wl",
+      "parameters": [
+        {
+          "name": "payment_hash",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1573
+    },
+    {
+      "rpc": "addtransaction",
+      "js": "addTransaction",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "tx",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1587
+    },
+    {
+      "rpc": "delete_request",
+      "js": "deleteRequest",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "request_id",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1600
+    },
+    {
+      "rpc": "delete_invoice",
+      "js": "deleteInvoice",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "invoice_id",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1608
+    },
+    {
+      "rpc": "clear_requests",
+      "js": "clearRequests",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1616
+    },
+    {
+      "rpc": "clear_invoices",
+      "js": "clearInvoices",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1622
+    },
+    {
+      "rpc": "notify",
+      "js": "notify",
+      "flags": "n",
+      "parameters": [
+        {
+          "name": "address",
+          "required": true
+        },
+        {
+          "name": "URL",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 1628
+    },
+    {
+      "rpc": "is_synchronized",
+      "js": "isSynchronized",
+      "flags": "wn",
+      "parameters": [
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1645
+    },
+    {
+      "rpc": "wait_for_sync",
+      "js": "waitForSync",
+      "flags": "wn",
+      "parameters": [
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1650
+    },
+    {
+      "rpc": "getfeerate",
+      "js": "getFeeRate",
+      "flags": "n",
+      "parameters": [],
+      "source": "commands.py",
+      "line": 1658
+    },
+    {
+      "rpc": "test_inject_fee_etas",
+      "js": "testInjectFeeEtas",
+      "flags": "n",
+      "parameters": [
+        {
+          "name": "fee_est",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 1675
+    },
+    {
+      "rpc": "removelocaltx",
+      "js": "removeLocalTx",
+      "flags": "w",
+      "parameters": [
+        {
+          "name": "txid",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1698
+    },
+    {
+      "rpc": "get_tx_status",
+      "js": "getTxStatus",
+      "flags": "wn",
+      "parameters": [
+        {
+          "name": "txid",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1713
+    },
+    {
+      "rpc": "help",
+      "js": "help",
+      "flags": "",
+      "parameters": [],
+      "source": "commands.py",
+      "line": 1726
+    },
+    {
+      "rpc": "add_peer",
+      "js": "addPeer",
+      "flags": "wnl",
+      "parameters": [
+        {
+          "name": "connection_string",
+          "required": true
+        },
+        {
+          "name": "timeout",
+          "required": false,
+          "default": "20"
+        },
+        {
+          "name": "gossip",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1733
+    },
+    {
+      "rpc": "gossip_info",
+      "js": "gossipInfo",
+      "flags": "wnl",
+      "parameters": [
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1751
+    },
+    {
+      "rpc": "list_peers",
+      "js": "listPeers",
+      "flags": "wnl",
+      "parameters": [
+        {
+          "name": "gossip",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1773
+    },
+    {
+      "rpc": "open_channel",
+      "js": "openChannel",
+      "flags": "wpnl",
+      "parameters": [
+        {
+          "name": "connection_string",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "required": true
+        },
+        {
+          "name": "push_amount",
+          "required": false,
+          "default": "0"
+        },
+        {
+          "name": "public",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "zeroconf",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1789
+    },
+    {
+      "rpc": "decode_invoice",
+      "js": "decodeInvoice",
+      "flags": "",
+      "parameters": [
+        {
+          "name": "invoice",
+          "required": true
+        }
+      ],
+      "source": "commands.py",
+      "line": 1813
+    },
+    {
+      "rpc": "lnpay",
+      "js": "lnPay",
+      "flags": "wnpl",
+      "parameters": [
+        {
+          "name": "invoice",
+          "required": true
+        },
+        {
+          "name": "timeout",
+          "required": false,
+          "default": "120"
+        },
+        {
+          "name": "max_cltv",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "max_fee_msat",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1823
+    },
+    {
+      "rpc": "nodeid",
+      "js": "nodeId",
+      "flags": "wl",
+      "parameters": [
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1878
+    },
+    {
+      "rpc": "list_channels",
+      "js": "listChannels",
+      "flags": "wl",
+      "parameters": [
+        {
+          "name": "public",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "private",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "active",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "open",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1884
+    },
+    {
+      "rpc": "list_channel_backups",
+      "js": "listChannelBackups",
+      "flags": "wl",
+      "parameters": [
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1927
+    },
+    {
+      "rpc": "enable_htlc_settle",
+      "js": "enableHtlcSettle",
+      "flags": "wnl",
+      "parameters": [
+        {
+          "name": "b",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1942
+    },
+    {
+      "rpc": "clear_ln_blacklist",
+      "js": "clearLnBlacklist",
+      "flags": "n",
+      "parameters": [],
+      "source": "commands.py",
+      "line": 1951
+    },
+    {
+      "rpc": "reset_liquidity_hints",
+      "js": "resetLiquidityHints",
+      "flags": "n",
+      "parameters": [],
+      "source": "commands.py",
+      "line": 1956
+    },
+    {
+      "rpc": "close_channel",
+      "js": "closeChannel",
+      "flags": "wnpl",
+      "parameters": [
+        {
+          "name": "channel_point",
+          "required": true
+        },
+        {
+          "name": "force",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1962
+    },
+    {
+      "rpc": "delete_channel",
+      "js": "deleteChannel",
+      "flags": "wpl",
+      "parameters": [
+        {
+          "name": "channel_point",
+          "required": true
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1978
+    },
+    {
+      "rpc": "delete_channel_backup",
+      "js": "deleteChannelBackup",
+      "flags": "wpl",
+      "parameters": [
+        {
+          "name": "channel_point",
+          "required": true
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 1996
+    },
+    {
+      "rpc": "request_force_close",
+      "js": "requestForceClose",
+      "flags": "wnpl",
+      "parameters": [
+        {
+          "name": "channel_point",
+          "required": true
+        },
+        {
+          "name": "connection_string",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 2014
+    },
+    {
+      "rpc": "export_channel_backup",
+      "js": "exportChannelBackup",
+      "flags": "wpl",
+      "parameters": [
+        {
+          "name": "channel_point",
+          "required": true
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 2030
+    },
+    {
+      "rpc": "import_channel_backup",
+      "js": "importChannelBackup",
+      "flags": "wl",
+      "parameters": [
+        {
+          "name": "encrypted",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 2043
+    },
+    {
+      "rpc": "get_channel_ctx",
+      "js": "getChannelCtx",
+      "flags": "wnpl",
+      "parameters": [
+        {
+          "name": "channel_point",
+          "required": true
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "iknowwhatimdoing",
+          "required": false,
+          "default": "False"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 2050
+    },
+    {
+      "rpc": "list_channel_htlcs",
+      "js": "listChannelHtlcs",
+      "flags": "wnl",
+      "parameters": [
+        {
+          "name": "channel_point",
+          "required": true
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 2070
+    },
+    {
+      "rpc": "get_watchtower_ctn",
+      "js": "getWatchtowerCtn",
+      "flags": "wnl",
+      "parameters": [
+        {
+          "name": "channel_point",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 2100
+    },
+    {
+      "rpc": "rebalance_channels",
+      "js": "rebalanceChannels",
+      "flags": "wnpl",
+      "parameters": [
+        {
+          "name": "from_scid",
+          "required": true
+        },
+        {
+          "name": "dest_scid",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "required": true
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 2109
+    },
+    {
+      "rpc": "get_submarine_swap_providers",
+      "js": "getSubmarineSwapProviders",
+      "flags": "wnl",
+      "parameters": [
+        {
+          "name": "query_time",
+          "required": false,
+          "default": "15"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 2136
+    },
+    {
+      "rpc": "normal_swap",
+      "js": "normalSwap",
+      "flags": "wnpl",
+      "parameters": [
+        {
+          "name": "onchain_amount",
+          "required": true
+        },
+        {
+          "name": "lightning_amount",
+          "required": true
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 2162
+    },
+    {
+      "rpc": "reverse_swap",
+      "js": "reverseSwap",
+      "flags": "wnpl",
+      "parameters": [
+        {
+          "name": "lightning_amount",
+          "required": true
+        },
+        {
+          "name": "onchain_amount",
+          "required": true
+        },
+        {
+          "name": "prepayment",
+          "required": false,
+          "default": "'dryrun'"
+        },
+        {
+          "name": "password",
+          "required": false,
+          "default": "None"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 2210
+    },
+    {
+      "rpc": "convert_currency",
+      "js": "convertCurrency",
+      "flags": "n",
+      "parameters": [
+        {
+          "name": "from_amount",
+          "required": false,
+          "default": "1"
+        },
+        {
+          "name": "from_ccy",
+          "required": false,
+          "default": "''"
+        },
+        {
+          "name": "to_ccy",
+          "required": false,
+          "default": "''"
+        }
+      ],
+      "source": "commands.py",
+      "line": 2267
+    },
+    {
+      "rpc": "send_onion_message",
+      "js": "sendOnionMessage",
+      "flags": "wnl",
+      "parameters": [
+        {
+          "name": "node_id_or_blinded_path_hex",
+          "required": true
+        },
+        {
+          "name": "message",
+          "required": true
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 2309
+    },
+    {
+      "rpc": "get_blinded_path_via",
+      "js": "getBlindedPathVia",
+      "flags": "wnl",
+      "parameters": [
+        {
+          "name": "node_id",
+          "required": true
+        },
+        {
+          "name": "dummy_hops",
+          "required": false,
+          "default": "0"
+        },
+        {
+          "name": "wallet_path",
+          "required": false,
+          "default": "None"
+        }
+      ],
+      "source": "commands.py",
+      "line": 2340
+    },
+    {
+      "rpc": "ping",
+      "js": "ping",
+      "flags": "",
+      "parameters": [],
+      "source": "daemon.py",
+      "line": 357
+    },
+    {
+      "rpc": "gui",
+      "js": "gui",
+      "flags": "",
+      "parameters": [
+        {
+          "name": "config_options",
+          "required": true
+        }
+      ],
+      "source": "daemon.py",
+      "line": 360
+    },
+    {
+      "rpc": "run_cmdline",
+      "js": "runCmdline",
+      "flags": "",
+      "parameters": [
+        {
+          "name": "config_options",
+          "required": true
+        }
+      ],
+      "source": "daemon.py",
+      "line": 377
+    }
+  ]
+}

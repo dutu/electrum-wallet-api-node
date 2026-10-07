@@ -1,0 +1,19 @@
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Keep the PnP loaders and local cache available for Yarn zero-installs.
+# Documentation: https://yarnpkg.com/features/caching#zero-installs
+
+node_modules/
+.idea/
+coverage/
+*.tgz
+.env
+.env.*
+!.env.example
+*.log
