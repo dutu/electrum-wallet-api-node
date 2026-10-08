@@ -1,6 +1,6 @@
 import { Buffer } from 'node:buffer'
 import { randomUUID } from 'node:crypto'
-import { requireOptions, requireString } from './options.js'
+import { requireOptions, requireString, requireTimeout, requireRequestOptions } from './options.js'
 import { createRedactor, redactCause } from './redact.js'
 import {
   ElectrumTransportError,
@@ -50,9 +50,7 @@ export class JsonRpcTransport {
       throw new TypeError('username cannot contain a colon in HTTP Basic Authentication')
     }
 
-    if (!Number.isInteger(timeout) || timeout < 1 || timeout > 2147483647) {
-      throw new TypeError('timeout must be an integer between 1 and 2147483647')
-    }
+    requireTimeout(timeout)
 
     const encoded = Buffer.from(`${username}:${password}`, 'utf8').toString('base64')
     this.#authorization = `Basic ${encoded}`
@@ -60,11 +58,12 @@ export class JsonRpcTransport {
     this.#secrets = [username, password, encoded]
   }
 
-  async request(method, params = {}) {
+  async request(method, params = {}, options = {}) {
     requireString(method, 'method')
     if (params === null || typeof params !== 'object') {
       throw new TypeError('params must be an object or array')
     }
+    const { timeout = this.#timeout, signal: callerSignal } = requireRequestOptions(options)
 
     const redact = createRedactor([
       ...this.#secrets, params.password, params.new_password, params.newPassword
@@ -87,11 +86,28 @@ export class JsonRpcTransport {
       })
     }
 
-    const signal = AbortSignal.timeout(this.#timeout)
+    const controller = new AbortController()
+    const { signal } = controller
+    let abortKind
+    const abort = (kind, reason) => {
+      // The first event wins, even if both sources abort before fetch rejects.
+      if (signal.aborted) return
+      abortKind = kind
+      controller.abort(reason)
+    }
+    const onAbort = () => abort('cancel', callerSignal.reason)
+    let timer
     let response
     let text
 
     try {
+      if (callerSignal?.aborted) {
+        onAbort()
+      } else {
+        callerSignal?.addEventListener('abort', onAbort, { once: true })
+        timer = setTimeout(() => abort('timeout', new DOMException('Request timed out', 'TimeoutError')), timeout)
+      }
+      signal.throwIfAborted()
       response = await fetch(this.#url, {
         method: 'POST',
         headers: {
@@ -105,11 +121,17 @@ export class JsonRpcTransport {
       })
       text = await response.text()
     } catch (cause) {
-      const options = { cause: redactCause(cause, redact) }
-      if (signal.aborted) {
-        throw new ElectrumTimeoutError(`Electrum ${safeMethod} request timed out after ${this.#timeout} ms`, options)
+      const errorOptions = { cause: redactCause(abortKind === 'cancel' ? signal.reason : cause, redact) }
+      if (abortKind === 'timeout') {
+        throw new ElectrumTimeoutError(`Electrum ${safeMethod} request timed out after ${timeout} ms`, errorOptions)
       }
-      throw new ElectrumTransportError(`Electrum ${safeMethod} request failed`, options)
+      if (abortKind === 'cancel') {
+        throw new ElectrumTransportError(`Electrum ${safeMethod} request cancelled`, errorOptions)
+      }
+      throw new ElectrumTransportError(`Electrum ${safeMethod} request failed`, errorOptions)
+    } finally {
+      clearTimeout(timer)
+      callerSignal?.removeEventListener('abort', onAbort)
     }
 
     if (!response.ok) {

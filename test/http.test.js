@@ -3,7 +3,7 @@ import { Buffer } from 'node:buffer'
 import { once } from 'node:events'
 import { createServer } from 'node:http'
 import test from 'node:test'
-import { ElectrumClient, ElectrumHttpError, ElectrumTimeoutError } from 'electrum-wallet-api-node'
+import { ElectrumClient, ElectrumHttpError, ElectrumTimeoutError, ElectrumTransportError } from 'electrum-wallet-api-node'
 
 const credentials = { username: 'rpc-user', password: 'rpc-password' }
 
@@ -70,6 +70,70 @@ for (const stage of ['headers', 'body']) {
       return true
     })
     assert.equal(await client.ping(), true)
+  })
+
+  test(`per-request timeout overrides the default while waiting for response ${stage}`, async (context) => {
+    let calls = 0
+    const url = await rpcServer(context, (_, response) => {
+      calls += 1
+      if (stage === 'body') {
+        response.writeHead(200, { 'Content-Type': 'application/json' })
+        response.flushHeaders()
+        response.write('{"jsonrpc":"2.0",')
+      }
+    })
+    const client = new ElectrumClient({ ...credentials, url, timeout: 10000 })
+    await assert.rejects(client.request('getinfo', {}, { timeout: 200, signal: new AbortController().signal }), (error) => {
+      assert.ok(error instanceof ElectrumTimeoutError)
+      assert.match(error.message, /200 ms/u)
+      return true
+    })
+    assert.equal(calls, 1)
+  })
+
+  test(`cancellation interrupts waiting for response ${stage} and allows subsequent requests`, async (context) => {
+    let ready
+    const received = new Promise((resolve) => { ready = resolve })
+    let reading
+    const bodyReadStarted = new Promise((resolve) => { reading = resolve })
+    if (stage === 'body') {
+      const originalText = Response.prototype.text
+      context.mock.method(Response.prototype, 'text', function () {
+        reading()
+        return originalText.call(this)
+      })
+    }
+    const methods = []
+    const url = await rpcServer(context, (_, response, payload) => {
+      methods.push(payload.method)
+      if (payload.method === 'ping') {
+        response.end(JSON.stringify({ jsonrpc: '2.0', id: payload.id, result: true }))
+        return
+      }
+      if (stage === 'body') {
+        response.writeHead(200, { 'Content-Type': 'application/json' })
+        response.flushHeaders()
+        response.write('{"jsonrpc":"2.0",')
+      }
+      ready()
+    })
+    const client = new ElectrumClient({ ...credentials, url, timeout: 10000 })
+    const controller = new AbortController()
+    const pending = client.getInfo({}, { timeout: 5000, signal: controller.signal })
+    const check = assert.rejects(pending, (error) => {
+      assert.ok(error instanceof ElectrumTransportError)
+      assert.ok(!(error instanceof ElectrumTimeoutError))
+      assert.match(error.message, /cancelled/u)
+      if (stage === 'body') assert.equal(error.cause, '[redacted] cancellation')
+      else assert.equal(error.cause.name, 'AbortError')
+      return true
+    })
+    await received
+    if (stage === 'body') await bodyReadStarted
+    controller.abort(stage === 'body' ? 'rpc-password cancellation' : undefined)
+    await check
+    assert.equal(await client.ping(), true)
+    assert.deepEqual(methods, ['getinfo', 'ping'])
   })
 }
 

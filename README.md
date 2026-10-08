@@ -61,7 +61,7 @@ left unchanged.
 | `url` | Required | HTTP or HTTPS RPC URL, including the port or reverse-proxy path. URL credentials, query strings and fragments are rejected. |
 | `username` | Required | Non-empty Electrum `rpcuser`, sent using HTTP Basic Authentication. Cannot contain `:`. |
 | `password` | Required | Non-empty Electrum `rpcpassword`, sent using HTTP Basic Authentication. |
-| `timeout` | `30000` | Integer milliseconds between 1 and 2147483647. Covers connection setup and reading the complete response. |
+| `timeout` | `30000` | Default request timeout in integer milliseconds between 1 and 2147483647. Covers connection setup and reading the complete response; individual calls can override it. |
 
 Connection settings are copied at construction and remain fixed. No request is
 made until an RPC method is called. HTTPS is supported for a TLS reverse proxy or
@@ -99,7 +99,9 @@ launches the daemon.
 
 ## Calling methods and parameters
 
-All named methods take one parameter object:
+All named methods follow `client.method(params = {}, options = {})`. The first
+object contains only Electrum RPC parameters; the optional second object contains
+only local request configuration. Existing calls with one object continue to work:
 
 ```js
 await client.getConfig({ key: 'fee_policy' })
@@ -125,11 +127,55 @@ The wrapper supplies no command defaults. Arrays containing `undefined` or holes
 are rejected rather than silently changing entries to `null`; use named params
 to omit an optional RPC argument.
 
-The [complete RPC reference](./docs/rpc-methods.md) lists all method names,
-parameters, aliases, source revision and requirements. All **122 core endpoints**
-registered by the inspected source have named wrappers, including Lightning,
-invoice, channel, swap, configuration and daemon commands. No core endpoint is
-excluded. Plugin-defined commands can be called using `request()`.
+The second object supports only `timeout` and `signal`:
+
+| Request option | Default | Description |
+| --- | --- | --- |
+| `timeout` | Client's constructor timeout | Integer milliseconds between 1 and 2147483647, including reading the complete response. Overrides the default for this call only. |
+| `signal` | None | Standard `AbortSignal` for cancelling this call. An already aborted signal prevents sending the request. |
+
+```js
+import { ElectrumTransportError } from 'electrum-wallet-api-node'
+
+await client.waitForSync({ walletPath }, { timeout: 120000 })
+
+const controller = new AbortController()
+const pending = client.getBalance({ walletPath }, {
+  timeout: 10000,
+  signal: controller.signal
+})
+controller.abort()
+try {
+  await pending
+} catch (error) {
+  if (!(error instanceof ElectrumTransportError)) throw error
+  // Handle the cancelled request; see Errors below.
+}
+```
+
+When `options.timeout` is omitted or `undefined`, the client's default applies.
+When timeout and cancellation are both enabled, the first event wins. A local
+timeout rejects with `ElectrumTimeoutError`; caller cancellation rejects with
+`ElectrumTransportError` and a sanitized cause from the abort reason. Timers and
+abort listeners are cleaned up when the request finishes. Other option keys are
+rejected, and no properties from `options` are sent to Electrum.
+
+Some Electrum RPCs, such as `lnPay()` and `addPeer()`, have their own `timeout`
+parameter. Keep that parameter in `params`, using the RPC's units; only
+`options.timeout` controls the client's waiting time in milliseconds.
+
+**One important detail:** A timeout or cancellation only stops the client from
+waiting for the response. It does not guarantee that Electrum has stopped
+executing the RPC command. This matters for operations such as `broadcast()`,
+`payTo()`, and wallet modifications. Check the daemon's state before deciding
+whether to repeat an operation. The client does not retry automatically.
+
+The [complete RPC reference](./docs/rpc-methods.md) includes categorized method
+overviews and detailed parameters, aliases, source revision and requirements.
+All **122 commands** registered by the inspected Electrum source revision have
+named wrappers, including Lightning, invoice, channel, swap, configuration and
+daemon commands.
+No core endpoint is excluded. Plugin-defined commands can be called using `request()`.
 
 An additional `history()` method calls the legacy `history` RPC directly for
 older Electrum versions. The inspected current source provides `onchainHistory()`
@@ -139,6 +185,7 @@ and `lightningHistory()` instead. Commands are never substituted automatically.
 
 ```js
 await client.loadWallet({ walletPath, password: process.env.ELECTRUM_WALLET_PASSWORD })
+await client.waitForSync({ walletPath }) // Wait before reading synchronized wallet data.
 const balance = await client.getBalance({ walletPath })
 const addresses = await client.listAddresses({ walletPath, balance: true })
 const history = await client.onchainHistory({ walletPath, showAddresses: true })
@@ -148,8 +195,25 @@ await client.closeWallet({ walletPath })
 
 `walletPath` refers to the daemon's filesystem. Electrum resolves it to a loaded
 wallet internally. Omitting it delegates default wallet selection to Electrum.
-There is no wrapper-level wallet object or automatic loading/synchronization.
-Use `waitForSync()` when needed and choose a timeout suitable for the operation.
+The client does not return a separate wallet object; call methods on `client`
+and pass `walletPath` to select the wallet for each call. Passing `walletPath`
+does not load the wallet automatically. Call `loadWallet()` first if the wallet
+is not already loaded in the daemon.
+
+Electrum synchronizes loaded wallets in the background. The client does not
+automatically wait for synchronization before making other calls. When you need
+synchronized wallet data, call `await client.waitForSync({ walletPath })` first.
+Use `isSynchronized({ walletPath })` to check the current status without waiting.
+
+`loadWallet()` returns without waiting for synchronization to finish. In contrast,
+`waitForSync()` keeps its RPC request open until the wallet is synchronized. If
+that wait exceeds the client's default 30-second request timeout, the call fails
+with `ElectrumTimeoutError`. To allow a longer wait for just this call, use
+`await client.waitForSync({ walletPath }, { timeout: 120000 })` (up to two minutes).
+Set `timeout` in the `ElectrumClient` constructor to change the default for all
+requests. Background synchronization itself does not require a longer request
+timeout.
+
 `stop()` asks Electrum to stop its daemon.
 
 ## Transactions
@@ -233,21 +297,29 @@ does not manage them.
 const balance = await client.request('getbalance', { wallet_path: walletPath })
 const policy = await client.request('getconfig', ['fee_policy'])
 const info = await client.request('getinfo')
+const controller = new AbortController()
+const synced = await client.request('wait_for_sync', { wallet_path: walletPath }, {
+  timeout: 120000,
+  signal: controller.signal
+})
 ```
 
-`request(method, params)` accepts original Electrum method names and named objects
-or positional arrays. Omitted params become `{}`. Generic calls do **not** map
+`request(method, params = {}, options = {})` accepts original Electrum method
+names and named objects or positional arrays. Omitted params become `{}`.
+Generic calls do **not** map
 camelCase parameter names. For wallet commands, use named `wallet_path` rather
 than attempting to serialize Electrum's internal Python `wallet` argument.
 This method supports future or plugin RPC commands before named methods are added.
 Every named method internally calls the same `request()` implementation.
+The third argument supports the same local `timeout` and `signal` options as
+named methods.
 
 ## Errors
 
 | Error | Meaning | Useful fields |
 | --- | --- | --- |
-| `TypeError` | Invalid connection settings, method/parameter container, duplicate parameter aliases, or unserializable JSON | `message`, optional sanitized `cause` |
-| `ElectrumTransportError` | Connection or response-body read failure | `cause` with sanitized underlying diagnostics |
+| `TypeError` | Invalid connection or request options, method/parameter container, duplicate parameter aliases, or unserializable JSON | `message`, optional sanitized `cause` |
+| `ElectrumTransportError` | Connection or response-body read failure, or caller cancellation | `cause` with sanitized underlying diagnostics or abort reason |
 | `ElectrumHttpError` | Non-2xx HTTP status, including authentication failures and redirects | `method`, `status`, `statusText`, `body` |
 | `ElectrumTimeoutError` | Request exceeds `timeout` | `message`, `cause` |
 | `ElectrumResponseError` | Invalid JSON, malformed JSON-RPC response, or mismatched request ID | `message`, optional `cause` |
@@ -276,8 +348,7 @@ try {
 
 Requests have generated UUID IDs and responses must match them. The client does
 not follow redirects, retry requests, send batches or serialize independent calls
-into a queue. A timeout does not guarantee that Electrum stopped processing a
-command. In the inspected daemon, an unregistered method produces HTTP 500;
+into a queue. In the inspected daemon, an unregistered method produces HTTP 500;
 it need not produce a JSON-RPC method-not-found error.
 
 Constructor and named-parameter validation can throw synchronously. Transport
@@ -295,6 +366,8 @@ const balance = await client.getBalance<{ confirmed: string; unconfirmed?: strin
 Parameters remain open to Electrum-specific and future values. The declarations
 provide known camelCase parameter names without imposing wallet or transaction
 models or overriding Electrum's validation.
+`ElectrumRequestOptions` describes the optional local configuration object, with
+`timeout?: number` and `signal?: AbortSignal`.
 
 ## Security
 

@@ -14,6 +14,32 @@ export const requireString = function requireString(value, name) {
   return value
 }
 
+export const requireTimeout = function requireTimeout(timeout) {
+  if (!Number.isInteger(timeout) || timeout < 1 || timeout > 2147483647) {
+    throw new TypeError('timeout must be an integer between 1 and 2147483647')
+  }
+
+  return timeout
+}
+
+/** Request configuration is local and deliberately limited to timeout and signal. */
+export const requireRequestOptions = function requireRequestOptions(options) {
+  requireOptions(options)
+  if (Reflect.ownKeys(options).some((key) => key !== 'timeout' && key !== 'signal')) {
+    throw new TypeError('Request options only support timeout and signal')
+  }
+
+  const { timeout, signal } = options
+  if (timeout !== undefined) requireTimeout(timeout)
+  if (signal !== undefined && (signal === null || typeof signal !== 'object'
+    || typeof signal.aborted !== 'boolean' || typeof signal.addEventListener !== 'function'
+    || typeof signal.removeEventListener !== 'function')) {
+    throw new TypeError('signal must be an AbortSignal')
+  }
+
+  return { timeout, signal }
+}
+
 /** Map only top-level aliases. RPC values and additional parameters are untouched. */
 export const mapParameters = function mapParameters(params = {}, aliases = {}) {
   requireOptions(params)

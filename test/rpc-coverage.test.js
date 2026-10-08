@@ -24,22 +24,28 @@ for (const command of snapshot.commands) {
   test(`${command.js} covers upstream ${command.rpc} with every parameter and no injected defaults`, async (context) => {
     const client = new ElectrumClient(credentials)
     const calls = []
-    context.mock.method(client, 'request', async (method, params) => {
-      calls.push({ method, params: JSON.parse(JSON.stringify(params)) })
+    context.mock.method(client, 'request', async (method, params, options) => {
+      calls.push({ method, params: JSON.parse(JSON.stringify(params)), options })
       return 'unchanged-result'
     })
     const params = Object.fromEntries(command.parameters.map(({ name }) => [jsName(name), `value-for-${name}`]))
-    assert.equal(await client[command.js](params), 'unchanged-result')
+    const options = Object.freeze({ timeout: 120000, signal: new AbortController().signal })
+    assert.equal(await client[command.js](params, options), 'unchanged-result')
+    assert.equal(calls[0].options, options)
     assert.deepEqual(calls[0], {
       method: command.rpc,
-      params: Object.fromEntries(command.parameters.map(({ name }) => [name, `value-for-${name}`]))
+      params: Object.fromEntries(command.parameters.map(({ name }) => [name, `value-for-${name}`])),
+      options
     })
     await client[command.js]()
-    assert.deepEqual(calls[1], { method: command.rpc, params: {} })
+    assert.deepEqual(calls[1], { method: command.rpc, params: {}, options: {} })
 
     const original = Object.fromEntries(command.parameters.map(({ name }) => [name, `raw-${name}`]))
     await client[command.js](original)
-    assert.deepEqual(calls[2], { method: command.rpc, params: original })
+    assert.deepEqual(calls[2], { method: command.rpc, params: original, options: {} })
+
+    await client[command.js](undefined, options)
+    assert.deepEqual(calls[3], { method: command.rpc, params: {}, options })
   })
 }
 

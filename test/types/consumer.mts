@@ -1,7 +1,7 @@
 import {
   ElectrumClient, ElectrumError, ElectrumTransportError, ElectrumTimeoutError,
   ElectrumHttpError, ElectrumResponseError, ElectrumRpcError,
-  type ElectrumClientOptions, type ElectrumNamedParams, type ElectrumRpcParams
+  type ElectrumClientOptions, type ElectrumRequestOptions, type ElectrumNamedParams, type ElectrumRpcParams
 } from 'electrum-wallet-api-node'
 
 const options: ElectrumClientOptions = {
@@ -24,6 +24,36 @@ await client.getTransaction({ txid: 'txid' })
 await client.addHoldInvoice({ paymentHash: 'hash', amount: '0.001' })
 await client.runCmdline({ configOptions: { cmd: 'getbalance', wallet_path: '/wallet' } })
 await client.history({ showFiat: true })
+
+const requestOptions: ElectrumRequestOptions = { timeout: 120000, signal: new AbortController().signal }
+const controlledBalance: { confirmed: string } = await client.getBalance<{ confirmed: string }>({ walletPath: '/wallet' }, requestOptions)
+const controlledRaw: boolean = await client.request<boolean>('ping', undefined, requestOptions)
+await client.request('getconfig', positional, requestOptions)
+await client.waitForSync(undefined, { timeout: undefined, signal: undefined })
+await client.history({}, requestOptions)
+
+type Assert<Condition extends true> = Condition
+type SameType<A, B> =
+  (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? true : false
+
+// Assert every second parameter individually: any missing or mistyped options
+// produces false, so the resulting union cannot satisfy the true constraint.
+type NamedMethodsHaveRequestOptions = Assert<{
+  [Method in Exclude<keyof ElectrumClient, 'request'>]: SameType<
+    Parameters<ElectrumClient[Method]>[1], ElectrumRequestOptions | undefined
+  >
+}[Exclude<keyof ElectrumClient, 'request'>]>
+
+// @ts-expect-error request timeout is a number
+await client.getBalance({}, { timeout: '30000' })
+// @ts-expect-error signal must implement AbortSignal
+await client.request('ping', {}, { signal: {} })
+// @ts-expect-error local options are limited to timeout and signal
+await client.payTo(params, { retries: 2 })
+// @ts-expect-error RPC parameters belong in the first object
+await client.getBalance({}, { walletPath: '/wallet' })
+// @ts-expect-error options must be an object
+await client.request('ping', {}, 30000)
 
 // @ts-expect-error credentials are required
 new ElectrumClient({ url: 'http://localhost:7777' })
@@ -50,4 +80,4 @@ if (error instanceof ElectrumHttpError) {
   const body: string = error.body
   void [status, body]
 }
-void [balance, raw, ElectrumError, ElectrumTransportError, ElectrumResponseError]
+void [balance, raw, controlledBalance, controlledRaw, ElectrumError, ElectrumTransportError, ElectrumResponseError]
